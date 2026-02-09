@@ -1,0 +1,104 @@
+{
+  "name": "markdown-to-audio",
+  "version": "1.0.0",
+  "description": "Convert markdown files to audio using OpenAI TTS API",
+  "main": "md2mp3-openai.py",
+  "type": "cli-tool",
+  "language": "python",
+  "requires": {
+    "python": ">=3.7",
+    "packages": ["openai>=1.0.0"],
+    "system": ["ffmpeg"],
+    "optional": ["pandoc"]
+  },
+  "usage": {
+    "command": "./md2mp3-openai.py",
+    "arguments": {
+      "input": {
+        "required": true,
+        "type": "file",
+        "description": "Markdown file to convert",
+        "example": "document.md"
+      },
+      "output": {
+        "required": false,
+        "type": "file",
+        "description": "Output audio file",
+        "default": "input filename with format extension",
+        "example": "output.mp3"
+      },
+      "voice": {
+        "required": false,
+        "type": "string",
+        "default": "shimmer",
+        "options": ["shimmer", "alloy", "echo", "fable", "onyx", "nova"],
+        "description": "Voice to use for TTS"
+      },
+      "model": {
+        "required": false,
+        "type": "string",
+        "default": "tts-1-hd",
+        "options": ["tts-1", "tts-1-hd"],
+        "description": "OpenAI TTS model"
+      },
+      "format": {
+        "required": false,
+        "type": "string",
+        "default": "mp3",
+        "options": ["mp3", "opus", "aac", "flac", "wav", "pcm"],
+        "description": "Audio output format"
+      }
+    },
+    "flags": {
+      "--preview": "Generate voice samples",
+      "--help": "Show help message",
+      "-h": "Show help message"
+    }
+  },
+  "environment": {
+    "OPENAI_API_KEY": {
+      "required": true,
+      "description": "OpenAI API key for TTS access"
+    }
+  },
+  "examples": [
+    {
+      "description": "Basic conversion with defaults",
+      "command": "./md2mp3-openai.py document.md"
+    },
+    {
+      "description": "Preview all voices",
+      "command": "./md2mp3-openai.py --preview"
+    },
+    {
+      "description": "Custom voice and format",
+      "command": "./md2mp3-openai.py document.md output.mp3 echo tts-1-hd mp3"
+    },
+    {
+      "description": "AAC format for mobile",
+      "command": "./md2mp3-openai.py document.md output.aac shimmer tts-1-hd aac"
+    }
+  ],
+  "cost": {
+    "tts-1": "$0.015 per 1K characters",
+    "tts-1-hd": "$0.030 per 1K characters"
+  },
+  "features": [
+    "Automatic text chunking for long documents",
+    "6 natural voices",
+    "6 audio formats",
+    "Cost estimation",
+    "Voice preview mode",
+    "Markdown to plain text conversion"
+  ],
+  "exit_codes": {
+    "0": "Success",
+    "1": "Error (check stderr)"
+  },
+  "documentation": {
+    "readme": "README.md",
+    "installation": "INSTALL.md",
+    "contributing": "CONTRIBUTING.md",
+    "ai_integration": "AI_AGENT_GUIDE.md"
+  }
+}

@@ -2,6 +2,8 @@
 
 Convert markdown files to high-quality audio using OpenAI's Text-to-Speech API.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Features
 
 - 6 natural-sounding voices (shimmer, alloy, echo, fable, onyx, nova)
@@ -87,6 +89,14 @@ Custom voice and format:
 # Standard quality (cheaper)
 ./md2mp3-openai.py article.md output.mp3 shimmer tts-1 mp3
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Issues
+
+Found a bug or have a feature request? [Open an issue](https://github.com/joshuascottpaul/markdown-to-audio/issues).
 
 ## License
 

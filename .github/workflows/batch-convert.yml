@@ -1,0 +1,48 @@
+name: Batch Convert on Push
+
+on:
+  push:
+    paths:
+      - 'content/*.md'
+  workflow_dispatch:
+
+jobs:
+  batch-convert:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+    
+    - name: Convert all markdown files
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: |
+        chmod +x md2mp3-openai.py
+        mkdir -p audio_output
+        
+        for file in content/*.md; do
+          if [ -f "$file" ]; then
+            filename=$(basename "$file" .md)
+            echo "Converting: $file"
+            ./md2mp3-openai.py "$file" "audio_output/${filename}.mp3" shimmer tts-1-hd mp3
+          fi
+        done
+    
+    - name: Upload audio files
+      uses: actions/upload-artifact@v4
+      with:
+        name: audio-files
+        path: audio_output/
+        retention-days: 30

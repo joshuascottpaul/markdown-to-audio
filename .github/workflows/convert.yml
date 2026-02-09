@@ -1,0 +1,77 @@
+name: Convert Markdown to Audio
+
+on:
+  workflow_dispatch:
+    inputs:
+      markdown_file:
+        description: 'Path to markdown file in repo'
+        required: true
+        default: 'tests/test_document.md'
+      voice:
+        description: 'Voice to use'
+        required: false
+        default: 'shimmer'
+        type: choice
+        options:
+          - shimmer
+          - alloy
+          - echo
+          - fable
+          - onyx
+          - nova
+      model:
+        description: 'TTS model'
+        required: false
+        default: 'tts-1-hd'
+        type: choice
+        options:
+          - tts-1
+          - tts-1-hd
+      format:
+        description: 'Audio format'
+        required: false
+        default: 'mp3'
+        type: choice
+        options:
+          - mp3
+          - opus
+          - aac
+          - flac
+          - wav
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+    
+    - name: Convert markdown to audio
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: |
+        chmod +x md2mp3-openai.py
+        ./md2mp3-openai.py "${{ inputs.markdown_file }}" \
+          "output.${{ inputs.format }}" \
+          "${{ inputs.voice }}" \
+          "${{ inputs.model }}" \
+          "${{ inputs.format }}"
+    
+    - name: Upload audio artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: audio-output
+        path: output.${{ inputs.format }}
+        retention-days: 7

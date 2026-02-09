@@ -31,6 +31,12 @@ See [AI_AGENT_GUIDE.md](AI_AGENT_GUIDE.md) for integration details and automatio
 
 Machine-readable spec: [tool-spec.json](tool-spec.json)
 
+## Cloud Deployment
+
+Run on GitHub Actions, AWS Lambda, Google Cloud Run, and more.
+
+See [CLOUD_DEPLOYMENT.md](CLOUD_DEPLOYMENT.md) for setup instructions.
+
 ## Requirements
 
 - Python 3.7+

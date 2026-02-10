@@ -17,7 +17,20 @@ Convert markdown files to high-quality audio using OpenAI's Text-to-Speech API.
 
 See [INSTALL.md](INSTALL.md) for detailed installation instructions.
 
-Quick install:
+### Quick Install with Package Managers
+
+**Using [bin](https://github.com/marcosnils/bin):**
+```bash
+bin install github.com/joshuascottpaul/markdown-to-audio
+```
+
+**Using [ubi](https://github.com/houseabsolute/ubi):**
+```bash
+ubi --project joshuascottpaul/markdown-to-audio --in ~/.local/bin
+```
+
+### Manual Install
+
 ```bash
 git clone https://github.com/joshuascottpaul/markdown-to-audio.git
 cd markdown-to-audio
